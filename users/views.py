@@ -1,9 +1,7 @@
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from numpy import product
 
 from .forms import AddressForm, RegistrationForm, ReviewForm, UserForm, UserProfileForm
 from .models import *
