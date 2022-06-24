@@ -10,6 +10,15 @@ Sign Up {% endblock %} {% block content %}
                         <h1 style="color: #fbb710; border-bottom: 2px solid ">Sign Up</h1>
                     </div>
                     {% include 'alert.html' %}
+                    {% if form.email.errors %}
+                    <div class="text-center my-3 p-1" style="background-color: tomato; border-radius: 5px; color: #fff !important">
+                        <p>{{ form.email.errors }}</p>
+                    </div>
+                    {% elif form.non_field_errors %}
+                    <div class="text-center my-3 p-1" style="background-color: tomato; border-radius: 5px; color: #fff !important">
+                        <p>{{ form.non_field_errors }}</p>
+                    </div>
+                    {% endif %}
                     <form action="{% url 'register' %}" method="POST">
                         {% csrf_token %}
 
@@ -67,15 +76,6 @@ Sign Up {% endblock %} {% block content %}
                                 >
                             </p>
                         </div>
-                        {% if form.email.errors %}
-                        <div class="text-center my-3 p-1" style="background-color: tomato; border-radius: 5px; color: #fff !important">
-                            <p>{{ form.email.errors }}</p>
-                        </div>
-                        {% elif form.non_field_errors %}
-                        <div class="text-center my-3 p-1" style="background-color: tomato; border-radius: 5px; color: #fff !important">
-                            <p>{{ form.non_field_errors }}</p>
-                        </div>
-                        {% endif %}
                     </form>
                 </div>
             </div>
