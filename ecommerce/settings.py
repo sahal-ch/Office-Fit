@@ -141,6 +141,9 @@ USE_TZ = True
 
 # STATIC_URL = 'static/'
 # STATICFILES_DIRS=[os.path.join(BASE_DIR/'static')]
+
+# S3 Bucket configs
+
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
@@ -186,8 +189,9 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 
 # S3 Bucket configs
+
 # DEFAULT_FILE_STORAGE = config('DEFAULT_FILE_STORAGE')
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
-AWS_QUERYSTRING_AUTH = config('AWS_QUERYSTRING_AUTH', cast=bool)
-AWS_S3_FILE_OVERWRITE = config('AWS_S3_FILE_OVERWRITE', cast=bool)
+# AWS_QUERYSTRING_AUTH = config('AWS_QUERYSTRING_AUTH', cast=bool)
+# AWS_S3_FILE_OVERWRITE = config('AWS_S3_FILE_OVERWRITE', cast=bool)
 
