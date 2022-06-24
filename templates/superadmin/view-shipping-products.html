@@ -1,0 +1,162 @@
+{% extends 'admin-index.html' %} {% load static %} {% block title %} OF Admin |
+Shipping Prodcuct Details {% endblock title %} {% block content %}
+
+<div class="container-fluid px-4 pt-0 pb-4">
+    <div class="row justify-content-center">
+        {% include 'alert.html' %}
+        <div class="col-12 col-md-8 card" style="border-radius: 10px">
+            <div class="card-header px-4 py-5">
+                <h5 class="text-muted mb-0">
+                    Shipping details of &nbsp;
+                    <span style="color: #d63384"
+                        >{{order.user.first_name}}&nbsp;{{order.user.last_name}}</span
+                    >
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <div
+                    class="d-flex justify-content-between align-items-center mb-4"
+                >
+                    <p class="lead fw-normal mb-0" style="color: #d63384">
+                        Order item
+                    </p>
+                    <p class="small text-muted mb-0">
+                        Tracking id : {{order.tracking_no}}
+                    </p>
+                </div>
+                {% for item in order_item %}
+                <div class="card shadow-0 border mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img
+                                    src="{{item.product.image_1.url}}"
+                                    class="img-fluid"
+                                    alt="Phone"
+                                />
+                            </div>
+                            <div
+                                class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                            >
+                                <p class="text-muted mb-0">
+                                    {{item.product.name}}
+                                </p>
+                            </div>
+
+                            <div
+                                class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                            >
+                                <p class="text-muted mb-0 small">
+                                    Qty : {{item.quantity}}
+                                </p>
+                            </div>
+                            <div
+                                class="col-md-2 text-center d-flex justify-content-center align-items-center"
+                            >
+                                <p class="text-muted mb-0 small">
+                                    Price : {{item.price}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="d-flex justify-content-between pt-2">
+                    <p class="fw-bold mb-0">Order Details</p>
+                </div>
+
+                <div class="d-flex justify-content-between pt-2">
+                    <p class="text-muted mb-0">
+                        Payment mode : {{order.payment_mode}}
+                    </p>
+                    <p class="text-muted mb-0">
+                        <span class="fw-bold me-4">Tracking id :</span
+                        >{{order.tracking_no}}
+                    </p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <p class="text-muted mb-0">
+                        Invoice Date : {{order.created_at}}
+                    </p>
+                    <p class="text-muted mb-0">
+                        <span class="fw-bold me-4">Payment id : </span
+                        >{{order.payment_id}}
+                    </p>
+                </div>
+
+                <div class="d-flex justify-content-between mb-5">
+                    <p class="text-muted mb-0">Is Paid : {{order.is_paid}}</p>
+                    <p class="text-muted mb-0">
+                        <span class="fw-bold me-4">Delivery Charges :</span>
+                        Free
+                    </p>
+                </div>
+                <div class="card border mb-4 p-3">
+                    <h4>shipping address</h4>
+                    <h6 class="card-title">{{order.full_name}}</h6>
+
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        {{order.address}}
+                    </h6>
+                    <p class="card-text">
+                        {{order.city}} , {{order.pin_code}} , {{order.state}}
+                        ,{{order.country}} , {{order.landmark}}
+                    </p>
+                    <a href="#" class="card-link">{{order.mobile}}</a>
+                </div>
+            </div>
+
+            {% if order.status == 'pending' %}
+            <div
+                class="d-flex align-items-center p-3"
+                style="background-color: black"
+            >
+                <a
+                    href="{% url 'edit-shipping-product' order.tracking_no %}"
+                    class="btn btn-success rounded-pill d-inline w-20"
+                    >approve it as : packed</a
+                >
+                {% elif order.status == 'packed' %}
+                <a
+                    href="{% url 'edit-shipping-product' order.tracking_no %}"
+                    class="btn btn-primary rounded-pill d-inline"
+                    >approve it as : shipped</a
+                >
+                {% elif order.status == 'shipped' %}
+                <a
+                    href="{% url 'edit-shipping-product' order.tracking_no %}"
+                    class="btn btn-warning rounded-pill d-inline"
+                    >approve it as : delivered</a
+                >
+                {% else %}
+                <div class="p-4">
+                    {% for message in messages %}
+                    <h5 class="text-success">{{message}}</h5>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div
+                class="card-footer border-0 px-4 py-5"
+                style="
+                    background-color: #d63384;
+                    border-bottom-left-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                "
+            >
+                <h5
+                    class="d-flex align-items-center justify-content-between text-white text-uppercase mb-0"
+                >
+                    Total amount
+                    <span class="h2 mb-0 ms-2">
+                        ₹ &nbsp;{{order.total_price}}</span
+                    >
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit | My Account | Verify Email
+{% endblock %} {% block content %}
+<div class="cart-table-area section-padding-100 pt-5">
+    <div class="container-fluid">
+        {% include 'alert.html' %}
+        <div class="row">
+            {% include 'user-dashboard.html' %}
+            <!--  -->
+            <div class="col-12 col-lg-8 mt-5">
+                <div class="card mt-5">
+                    <div class="card-body text-center">
+                        <div class="row justify-content-around">
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                {% if user_profile.profile_picture %}
+                                <a href="{% url 'edit-profile' %}">
+                                    <img src="{{ user_profile.profile_picture.url }}" alt="User Profile Pic" width="75" height="75" style="border-radius: 50%;" class="avatar mb-3">
+                                </a>
+                                {% else %}
+                                <a href="{% url 'edit-profile' %}">
+                                    <img src="https://www.w3schools.com/howto/img_avatar.png" alt="User Profile Pic" width="75" height="75" style="border-radius: 50%;" class="avatar mb-3">
+                                </a>
+                                {% endif %}
+                                
+                                {% if user.email_verified %}
+                                <p>email : <span style="color: #fbb710;">{{ user.email }}</span></p>
+                                {% else %}
+                                <p>email : <span class="text-danger">{{ user.email }}</span></p>
+                                {% endif %}
+
+                                <p>mobile number : {{ user.mobile }}</p>
+                                {% if user.email_verified %}
+                                <p class="text-success">Your email is verified &nbsp; <i class="fa-solid fa-check fa-lg"></i></p>
+                                {% else %}
+                                <a href="{% url 'send-email-link' %}" class="btn amado-btn px-3">Verify Email</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

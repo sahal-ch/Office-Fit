@@ -1,0 +1,18 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit | Payment Status
+{% endblock %} {% block content %}
+<div class="cart-table-area section-padding-100 pt-5">
+    <div class="container-fluid">
+        {% include 'alert.html' %}
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center align-items-center pt-5">
+                <div class="d-flex flex-column aling-items-center text-success" style="gap: 20px;">
+                    <i class="fa-solid fa-circle-check" style="font-size: 60px; align-self: center;"></i>
+                    <p class="mb-0 text-success" style="font-size: 32px; align-self: center">Thank you, Your Payment is successful</p>
+                    <a class="btn amado-btn my-5" href="{% url 'shop' %}">Continue shopping with us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit |
+Wishlist {% endblock %} {% block content %}
+<div class="cart-table-area section-padding-100 pt-2">
+    <div class="container-fluid">
+        {% include 'alert.html' %}
+        {% if not wishlist_items %}
+        <h2 style="font-weight: 800" class="text-danger mt-5">
+            Your wishlist is empty!!!
+        </h2>
+        <a class="btn amado-btn my-5 px-4" href="{% url 'shop' %}"
+            >Looking for comfy furnitures?</a
+        >
+        {% else %}
+        <div class="row">
+            <div class="col-12">
+                <div class="cart-title mt-50">
+                    <h2>My Wishlist</h2>
+                </div>
+
+                <div class="cart-table clearfix">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for wishlist_item in wishlist_items %}
+                            <tr class="align-items-center">
+                                <td class="cart_product_img">
+                                    <a
+                                        href="{{ wishlist_item.product.get_url }}"
+                                        ><img
+                                            src="{{ wishlist_item.product.image_1.url }}"
+                                            alt="Product"
+                                    /></a>
+                                </td>
+                                <td
+                                    class="cart_product_desc d-flex flex-column text-center"
+                                >
+                                    <a
+                                        style="font-size: 18px"
+                                        href="{{ wishlist_item.product.get_url }}"
+                                        >{{ wishlist_item.product.name }}</a
+                                    >
+                                </td>
+                                <td
+                                    class="price d-flex flex-column text-center"
+                                >
+                                    <p style="font-size: 16px; color: #000">
+                                        &#8377; {{ wishlist_item.product.price}}
+                                    </p>
+                                    {% if wishlist_item.product.stock > 0 %}
+                                    <p
+                                        class="avaibility"
+                                        style="font-size: 12px"
+                                    >
+                                        <i
+                                            class="fa fa-circle"
+                                            style="color: green"
+                                        ></i>
+                                        In Stock
+                                    </p>
+                                    {% else %}
+                                    <p
+                                        class="avaibility text-danger"
+                                        style="font-size: 12px"
+                                    >
+                                        <i
+                                            class="fa fa-circle"
+                                            style="color: red"
+                                        ></i>
+                                        Out of Stock
+                                    </p>
+                                    {% endif %}
+                                </td>
+                                <td
+                                    class="qty d-flex justify-content-around align-items-center"
+                                >
+                                    <a
+                                        href="{% url 'remove-from-wishlist' wishlist_item.product.id wishlist_item.id %}"
+                                        ><i
+                                            class="fa-solid fa-heart"
+                                            style="color: red; font-size: 32px"
+                                            title="Remove from Wishlist"
+                                        ></i
+                                    ></a>
+                                    {% if wishlist_item.product.stock %}
+                                    <a
+                                        href="{% url 'add-to-cart' wishlist_item.product.id %}"
+                                        data-toggle="tooltip"
+                                        data-placement="left"
+                                        title="Add to Cart"
+                                        ><img
+                                            src="{% static 'img/core-img/cart.png' %}"
+                                            alt="cart icon"
+                                            style="width: 32px"
+                                    /></a>
+                                    {% else %}
+                                    <a
+                                        href="{% url 'cart' %}"
+                                        data-toggle="tooltip"
+                                        data-placement="left"
+                                        title="View Cart"
+                                        ><img
+                                            src="{% static 'img/core-img/cart.png' %}"
+                                            alt="cart icon"
+                                            style="width: 32px"
+                                    /></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

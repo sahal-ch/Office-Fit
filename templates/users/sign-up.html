@@ -1,0 +1,87 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit |
+Sign Up {% endblock %} {% block content %}
+
+<div class="cart-table-area section-padding-100 pt-2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="checkout_details_area mt-50 clearfix">
+                    <div class="cart-title text-center mb-4">
+                        <h1 style="color: #fbb710; border-bottom: 2px solid ">Sign Up</h1>
+                    </div>
+                    {% include 'alert.html' %}
+                    <form action="{% url 'register' %}" method="POST">
+                        {% csrf_token %}
+
+                        <div class="form-row mb-2">
+                            <div class="col-12 col-lg-6 form-group">
+                                <label for="">First Name</label>
+                                {{ form.first_name }}
+                            </div>
+                            <div class="col-12 col-lg-6 form-group">
+                                <label for="">Last Name</label>
+                                {{form.last_name}}
+                            </div>
+                        </div>
+
+                        <div class="form-row mb-2">
+                            <div class="col-12 col-lg-6 form-group">
+                                <label for="">Email</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="col-12 col-lg-6 form-group">
+                                <label for="">Mobile</label>
+                                {{form.mobile}}
+                            </div>
+                        </div>
+
+                        <div class="form-row mb-2">
+                            <div class="col-12 col-lg-6 form-group">
+                                <label for="">Create Password</label>
+                                {{form.password}}
+                            </div>
+                            <div class="col-12 col-lg-6 form-group">
+                                <label for="">Confirm Password</label>
+                                {{form.confirm_password}}
+                            </div>
+                        </div>
+
+                        <!-- Submit button -->
+                        <div class="d-flex justify-content-center mt-3">
+                            <button
+                            type="submit"
+                            class="btn amado-btn mb-3"
+                            style="
+                                background-color: #fbb710;
+                                border: none;
+                            "
+                        >
+                            Sign Up
+                        </button>
+                        </div>
+
+                        <div class="text-center">
+                            <p>
+                                Already have an Account?
+                                <a href="{% url 'login' %}" style="font-size: 16px; color: #fbb710; border-bottom: 1px solid #fbb710" >Login</a
+                                >
+                            </p>
+                        </div>
+                        {% if form.email.errors %}
+                        <div class="text-center my-3 p-1" style="background-color: tomato; border-radius: 5px; color: #fff !important">
+                            <p>{{ form.email.errors }}</p>
+                        </div>
+                        {% elif form.non_field_errors %}
+                        <div class="text-center my-3 p-1" style="background-color: tomato; border-radius: 5px; color: #fff !important">
+                            <p>{{ form.non_field_errors }}</p>
+                        </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

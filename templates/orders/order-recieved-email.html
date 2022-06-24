@@ -1,0 +1,15 @@
+{% autoescape off %}
+
+Hi {{user.first_name}},
+
+Your Order Has been recieved.
+
+Tracking Number : {{ order.tracking_no }}
+
+Total : {{ order.total_price }}
+
+Payment method : {{ order.payment_method }}
+
+Shipping Address : {{ order.full_name }}, {{ order.address }}, Pin code : {{ order.pin_code }}
+
+{% endautoescape off %}

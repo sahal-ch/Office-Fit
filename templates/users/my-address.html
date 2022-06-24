@@ -1,0 +1,122 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit | My Account | My Address
+{% endblock %} {% block content %}
+<div class="cart-table-area section-padding-100 pt-5">
+    <div class="container-fluid">
+        {% include 'alert.html' %}
+        <div class="row">
+            {% include 'user-dashboard.html' %}
+            <!--  -->
+            <div class="col-12 col-lg-8 mt-5">
+                    <div class="card-body mt-4">
+                        <div class="row justify-content-around">
+                          <div class="tab-content p-0">
+                        <div class="tab-pane show active" id="tab-address" role="tabpanel"
+                            aria-labelledby="tab-address-link">
+                            <div class="col-md-12">
+                                <div class="accordion accordion-icon" id="accordion-3">
+                                    <div class="card" style="border-bottom: 1px solid #ccc;">
+                                        <div class="card-header" id="heading3-1">
+                                            <h2 class="card-title text-center mb-0">
+                                                <a class="collapsed" role="button" data-toggle="collapse"
+                                                    href="#collapse3-1" aria-expanded="false"
+                                                    aria-controls="collapse3-1">
+                                                    <span class="btn amado-btn" style="font-size: 18px;">Add Address</span>
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="collapse3-1" class="collapse {% if check %}
+                                        show
+                                        {% endif %}" aria-labelledby="heading3-1" data-parent="#accordion-3">
+                                            <div class="card-body">
+                                                <form action="{% url 'my-address' %}" method="POST" id="address-form">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-12 mb-3">
+                                                            <label class="mb-0">Full Name</label>
+                                                            {{form.full_name}}
+                                                        </div>
+
+                                                        <div class="col-12 mb-3">
+                                                            <label class="mb-0">Phone Number</label>
+                                                            {{form.mobile}}
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label class="mb-0">Address</label>
+                                                            {{form.address}}
+                                                        </div>
+                                                        <div class="col-sm-6 mb-3">
+                                                            <label class="mb-0">City</label>
+                                                            {{form.city}}
+                                                        </div>
+                                                        <div class="col-sm-6 mb-3">
+                                                            <label class="mb-0">State</label>
+                                                            {{form.state}}
+                                                        </div>
+                                                        <div class="col-sm-6 mb-3">
+                                                            <label class="mb-0">Country</label>
+                                                            {{form.country}}
+                                                        </div>
+                                                        <div class="col-sm-6 mb-3">
+                                                            <label class="mb-0">Pin Code</label>
+                                                            {{form.pin_code}}
+                                                        </div>
+
+                                                        <div class="col-12 mb-3">
+                                                            <label class="mb-0">Landmark</label>
+                                                            {{form.landmark}}
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="btn amado-btn my-3 w-100">Add Address</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                
+                                <p class="text-center my-2 mt-4" style="color: #000">The following addresses can be used on the checkout page by default.</p>
+                                {% if check %}
+                                {% else %}
+                                <div class="row ">
+
+                                    {% for x in address %}
+                                    <div class="col-12 mb-3">
+                                        <div class="card card-dashboard">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-12 pl-4 pr-0">
+                                                        <p>Name : <b style="color: #fbb710">{{x.full_name}}</b></p>
+                                                             
+                                                        <p>Address :<span>{{x.address}} ,</span>
+                                                        <span>{{x.city}}, {{x.state}}, {{x.country}}</span></p>
+                                                        <p>Mobile Number : {{x.mobile}}</p>
+                                                        <p>Pin code : {{x.pin_code}}</p>
+                                                        <p>Land Mark : {{x.landmark}}</p>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <form action="{% url 'delete-address' x.id %}" method="POST">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to delete this address')">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- End .col-lg-6 -->
+                                    {% endfor %}
+
+                                </div><!-- End .row -->
+                                {% endif %}
+                            </div><!-- .End .tab-pane -->
+
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

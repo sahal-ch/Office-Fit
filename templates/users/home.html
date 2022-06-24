@@ -1,0 +1,78 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit | Home
+{% endblock %} {% block content %}
+
+<!-- Product Catagories Area Start -->
+
+<div class="products-catagories-area clearfix py-3">
+    {% include 'alert.html' %}
+    <div class="amado-pro-catagory clearfix">
+        <!-- Single Catagory -->
+        <div class="single-products-catagory px-0 clearfix col-12 col-lg-6">
+            <div
+                class="card m-3 mx-0"
+                style="
+                    width: 21rem;
+                    height: 700px;
+                    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+                    border: none;
+                "
+            >
+                <img
+                    class="card-img-top"
+                    src="{% static 'img/product-img/office-setup.jpg' %}"
+                    alt="office setup"
+                />
+                <div class="card-body">
+                    <h5 class="card-title">Complete Office Setup</h5>
+                    <p class="card-text">
+                        We provide unique, independent design, which produces
+                        and retails premium quality. With modern sleek design,
+                        our products can suit any office dorm, home, school and
+                        workspace.
+                    </p>
+                    <a
+                        href="{% url 'shop' %}"
+                        class="btn amado-btn d-flex justify-content-center align-items-center"
+                        style="height: 60px; margin-top: 75px"
+                        >View All</a
+                    >
+                </div>
+            </div>
+        </div>
+
+        <!-- This categories is the keyword from return value of menu_link function in the context_processors.py -->
+        {% for category in categories %}
+        <div class="single-products-catagory px-0 clearfix col-12 col-lg-6">
+            <div
+                class="card m-3 mx-0"
+                style="
+                    width: 21rem;
+                    height: 700px;
+                    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+                    border: none;
+                "
+            >
+                <img
+                    class="card-img-top"
+                    src="{{ category.category_image.url }}"
+                    alt="{{ category.category_image }}-image"
+                />
+                <div class="card-body">
+                    <h5 class="card-title">{{ category.category_name }}</h5>
+                    <p class="card-text">{{ category.category_description }}</p>
+                    <a
+                        href="{{ category.get_url }}"
+                        class="btn amado-btn d-flex justify-content-center align-items-center"
+                        style="height: 60px; color : #fff !important;"
+                        >Shop {{category.category_name}}</a
+                    >
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+<!-- Product Catagories Area End -->
+
+{% endblock %}

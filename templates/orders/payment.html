@@ -1,0 +1,186 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit | Payments
+{% endblock %} {% block content %}
+<div class="cart-table-area section-padding-100 pt-5">
+    <div class="container-fluid">
+        {% include 'alert.html' %}
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <div class="cart-title mt-50">
+                    <h2>Payments</h2>
+                </div>
+
+                <div class="cart-table clearfix">
+                    <div class="card my-3">
+                        <h5 class="card-header">Billing Address</h5>
+                        <div class="card-body">
+                            <p class="card-text">Name : {{ order.full_name }}</p>
+                            <p class="card-text">Address : {{ order.address }}</p>
+                            <p class="card-text">mobile Number : {{ order.mobile }}</p>
+                            <p class="card-text">City : {{ order.city }}</p>
+                            <p class="card-text">Pin code : {{ order.pin_code }}</p>
+                            <p class="card-text">State : {{ order.state }}</p>
+                            <p class="card-text">Country : {{ order.country }}</p>
+                            {% if order.message %}
+                            <p class="card-text"> Order Note : {{ order.message }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="card my-3">
+                        <h5 class="card-header">Review Products</h5>
+                        <div class="card-body">
+                            <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th
+                                    class="p-0 d-flex justify-content-center align-items-center"
+                                >
+                                    Name
+                                </th>
+                                <th
+                                    class="p-0 d-flex justify-content-center align-items-center"
+                                >
+                                    Price
+                                </th>
+                                <th
+                                    class="p-0 d-flex justify-content-center align-items-center"
+                                >
+                                    Quantity
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cart_item in cart_items %}
+                            <tr class="align-items-center mb-2">
+                                <td class="cart_product_img p-0 text-center">
+                                    <a href="{{ cart_item.product.get_url }}"
+                                        ><img
+                                            src="{{ cart_item.product.image_1.url }}"
+                                            alt="Product"
+                                    /></a>
+                                </td>
+                                <td
+                                    class="cart_product_desc d-flex flex-column p-0 text-center"
+                                >
+                                    <a href="{{ cart_item.product.get_url }}"
+                                        >{{ cart_item.product.name }}</a
+                                    >
+                                </td>
+                                <td
+                                    class="price d-flex flex-column p-0 text-center"
+                                >
+                                    <p
+                                        style="font-size: 13px; color: #333"
+                                        class="mb-0"
+                                    >
+                                        &#8377; {{ cart_item.product.price }}
+                                    </p>
+                                </td>
+
+                                <td class="qty p-0 text-center">
+                                    <p
+                                        class="mb-0"
+                                        style="font-size: 12px; color: #333"
+                                    >
+                                        {{ cart_item.quantity }}
+                                    </p>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="cart-summary">
+                    <form action="{% url 'payments' %}" method="POST">
+                        {% csrf_token %}
+                        <h5 class="text-center">Cart Total</h5>
+                        <ul class="summary-table px-1">
+                            <li>
+                                <span>Total : </span>
+                                <span>&#8377; {{ total }}</span>
+                            </li>
+                            <li>
+                                <span>Tax : </span>
+                                <span>&#8377; {{ tax }}</span>
+                            </li>
+                            <li>
+                                <span>Grand Total : </span>
+                                <span>&#8377; {{ grand_total }}</span>
+                            </li>
+                        </ul>
+                        <div class="cart-btn mt-100">
+                            
+                            <button  class="btn amado-btn w-100 mb-3" type="submit" onclick="onlinePay()">Online Payment</button>
+                            
+                        </div>
+
+                    </form>
+                    <div class="cart-btn">
+                        <form action="{% url 'cash-on-delivery' %}" method="POST">
+                            {% csrf_token %}
+                            <button onclick="sweetalertclick()" class="btn amado-btn boxed-btn mb-3 w-100" >Cash On Delivery</button>
+                        </form>
+                    </div>
+                    <!--  -->
+                    {% if payment %}
+                    <form action="{% url 'payment-status' %}" method="POST">
+                        {% csrf_token %}
+                        <script
+                            src="https://checkout.razorpay.com/v1/checkout.js"
+                            data-key="rzp_test_TzZFLHCdtd9Xfw" 
+                            data-amount="{{ payment.amount }}" 
+
+                            data-currency="{{ payment.currency }}"// You can accept international payments by changing the currency code. Contact our Support Team to enable International for your account
+
+                            data-order_id="{{ payment.id }}"// Replace with the order_id generated by you in the backend.
+
+                            data-buttontext="Pay with Razorpay"
+
+                            data-name="Office Fit"
+
+                            data-description="The best comfy and sassy furnitures for your office."
+
+                            data-image="{% static 'img/core-img/logo-1.png' %}"
+                            data-prefill.name="{{ payment.name }}"
+                            data-prefill.email="{{ payment.email }}"
+                            data-theme.color="#fbb710"
+                        ></script>
+                        <input type="hidden" custom="Hidden Element" name="hidden" id="razorpay">
+                    </form>
+                    {% endif %}
+                    <!--  -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    function sweetalertclick(){
+        swal({
+            title: "ORDER PLACED!",
+            text: "Thank You, keep shopping with us!",
+            icon: "success",
+
+            })
+
+            setTimeout(()=>{
+                window.location.href='/'
+            }, 2000)
+    }
+
+    function onlinePay() {
+        console.log('hello world')
+        btn = document.getElementById('razorpay')
+        console.log(btn)
+        btn.style.backgroundColor = 'black'
+    }
+
+
+</script>
+{% endblock %}

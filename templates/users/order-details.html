@@ -1,0 +1,208 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit | My Account | Order Details
+{% endblock %} {% block content %}
+<div class="cart-table-area section-padding-100 pt-5">
+    <div class="container-fluid">
+        
+        <div class="row">
+            {% include 'user-dashboard.html' %}
+            <!--  -->
+            <div class="col-12 col-lg-8">
+                {% include 'alert.html' %}
+                <div class="cart-title mt-50">
+                    <h2 class="mb-2" style="color: #fbb710">Thank you for shopping with us!</h2>
+                </div>
+
+                <div class="cart-table clearfix">
+                    {% for item in order_details %}
+                    <div class="card mb-5" style="box-shadow: 0 3px 12px rgba(0, 0, 0, 0.09); border: none;">
+                        <h5 class="card-header" style="background-color: #fff; border: none;">Product : <span style="color: #fbb710;">{{ item.product.name }}</span></h5>
+                        <div class="card-body">
+                            <!--  -->
+                            {% if item.status == 'ordered' or item.status == 'shipped' or item.status == 'out_for_delivery' %}
+                            <p class="text-dark">Order Status : <span class="text-primary">{{ item.status }}</span></p>
+                            {% elif item.status == 'delivered' %}
+                            <p class="text-dark">Order Status : <span class="text-success">{{ item.status }}</span></p>
+                            {% elif item.status == 'cancelled' %}
+                            <p class="text-dark">Order Status : <span class="text-danger">{{ item.status }}</span></p>
+                            {% endif %}
+
+                            <div class="d-flex mb-3" style="gap: 30px">
+                                <div class="col-12 col-md-6">
+                                    <a href="{{ item.product.get_url }}">
+                                        <img
+                                        src="{{ item.product.image_1.url }}"
+                                        alt=""
+                                        style="height: 200px; border: 1px solid #999"
+                                        />
+                                    </a>
+                                </div>
+                                <div class="d-flex flex-column justify-content-between col-12 col-md-6">
+                                    
+                                    <p class="my-0">Price : ₹ {{item.product_price}}</p>
+                                    <p class="my-0">Qty : {{ item.quantity }}</p>
+                                    <p class="my-0">Tax : ₹ {{ item.tax }}</p>
+                                    <p class="my-0">Total : <strong> ₹ {{ item.total }}</strong></p>
+                                    
+                                </div>
+                                
+                            </div>
+                            <!--  -->
+                            {% if item.status == 'cancelled' %}
+                            <div class="my-3 py-4 d-flex bg-light justify-content-center">
+                                <h3 class="text-danger mb-0">Your Order is Cancelled!</h3>
+                            </div>
+                            {% else %}
+                            <div class="my-3 py-5 d-flex bg-light">
+                                <div
+                                    class="order-tracking {% if item.status == 'ordered' or item.status == 'shipped' or item.status == 'out_for_delivery' or item.status == 'delivered' %} completed {% endif %}"
+                                >
+                                    <span class="is-complete"></span>
+                                    <p>Ordered</p>
+                                </div>
+                                <div
+                                    class="order-tracking {% if item.status == 'shipped' or item.status == 'out_for_delivery' or item.status == 'delivered' %} completed {% endif %}"
+                                >
+                                    <span class="is-complete"></span>
+                                    <p>Shipped</p>
+                                </div>
+                                <div
+                                    class="order-tracking {% if item.status == 'delivered' or item.status == 'out_for_delivery' %} completed {% endif %}"
+                                >
+                                    <span class="is-complete"></span>
+                                    <p>Out For Delivery</p>
+                                </div>
+                                <div
+                                    class="order-tracking {% if item.status == 'delivered' %} completed {% endif %}"
+                                >
+                                    <span class="is-complete"></span>
+                                    <p>Delivered</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <!--  -->
+                            <p class="card-text text-dark">Payment method : {{order.payment_method}}</p>
+                            <p class="card-text text-dark">Tracking no. : {{order.tracking_no}}</p>
+                            {% if order_details.payment.razorpay_payment_id %}
+                            <p class="card-text text-dark">Transaction Id : {{ order_details.payment.razorpay_payment_id }}</p>
+                            {% endif %}
+                            <p class="card-text text-dark">Invoice Date : {{ order.created_at|date }}</p>
+                            <!-- <a href="" class="btn amado-btn">View Invoice</a> -->
+                 
+                            
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<style>
+    .gradient-custom {
+        /* fallback for old browsers */
+        background: #cd9cf2;
+
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(
+            to top left,
+            rgba(205, 156, 242, 1),
+            rgba(246, 243, 255, 1)
+        );
+
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(
+            to top left,
+            rgba(205, 156, 242, 1),
+            rgba(246, 243, 255, 1)
+        );
+    }
+
+    .hh-grayBox {
+        background-color: #f8f8f8;
+        margin-bottom: 20px;
+        padding: 35px;
+        margin-top: 20px;
+    }
+    .pt45 {
+        padding-top: 45px;
+    }
+    .order-tracking {
+        text-align: center;
+        width: 33.33%;
+        position: relative;
+        display: block;
+    }
+    .order-tracking .is-complete {
+        display: block;
+        position: relative;
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+        border: 0px solid #afafaf;
+        background-color: #f7be16;
+        margin: 0 auto;
+        transition: background 0.25s linear;
+        -webkit-transition: background 0.25s linear;
+        z-index: 2;
+    }
+    .order-tracking .is-complete:after {
+        display: block;
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 7px;
+        top: -2px;
+        bottom: 0;
+        left: 5px;
+        margin: auto 0;
+        border: 0px solid #afafaf;
+        border-width: 0px 2px 2px 0;
+        transform: rotate(45deg);
+        opacity: 0;
+    }
+    .order-tracking.completed .is-complete {
+        border-color: #27aa80;
+        border-width: 0px;
+        background-color: #27aa80;
+    }
+    .order-tracking.completed .is-complete:after {
+        border-color: #fff;
+        border-width: 0px 3px 3px 0;
+        width: 7px;
+        left: 11px;
+        opacity: 1;
+    }
+    .order-tracking p {
+        color: #a4a4a4;
+        font-size: 16px;
+        margin-top: 8px;
+        margin-bottom: 0;
+        line-height: 20px;
+    }
+    .order-tracking p span {
+        font-size: 14px;
+    }
+    .order-tracking.completed p {
+        color: #000;
+    }
+    .order-tracking::before {
+        content: "";
+        display: block;
+        height: 3px;
+        width: calc(100% - 40px);
+        background-color: #f7be16;
+        top: 13px;
+        position: absolute;
+        left: calc(-50% + 20px);
+        z-index: 0;
+    }
+    .order-tracking:first-child:before {
+        display: none;
+    }
+    .order-tracking.completed:before {
+        background-color: #27aa80;
+    }
+</style>
+
+{% endblock %}

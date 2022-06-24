@@ -1,0 +1,190 @@
+{% extends 'admin-index.html' %} {% load static %} {% block title %} OF Admin |
+Dashboard {% endblock %} {% block content %}
+<div class="container-fluid px-4 pt-0 pb-4">
+  <div class="row">
+    {% include 'alert.html' %}
+    <h3 class="mb-4">Admin Dashboard</h2>
+    <div class="row align-items-stretch" style="align-items: stretch !important;">
+        <div class="col-lg-3 col-6 mb-xl-0 mb-4 align-self-stretch">
+            <div class="card">
+                <div class="card-body p-3">
+                <div class="row">
+                    <div class="col-8">
+                    <div class="numbers">
+                        <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Revenue</p>
+                        <h5 class="font-weight-bolder">
+                        ₹ {{total_revenue}}
+                        </h5>
+                    </div>
+                    </div>
+                    <div class="col-4 text-end">
+                    <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                        <i class="material-icons opacity-10">attach_money</i>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6 mb-xl-0 mb-4 align-self-stretch">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                        <div class="numbers">
+                            <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Users</p>
+                            <h5 class="font-weight-bolder">
+                            {{u_count}}
+                            </h5>
+                        </div>
+                        </div>
+                        <div class="col-4 text-end">
+                        <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
+                            <i class="material-icons opacity-10">person</i>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6 mb-xl-0 mb-4 align-self-stretch">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                        <div class="numbers">
+                            <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Products</p>
+                            <h5 class="font-weight-bolder">
+                            {{p_count}}
+                            </h5>
+                            
+                        </div>
+                        </div>
+                        <div class="col-4 text-end">
+                        <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                            <i class="material-icons opacity-10">chair</i>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6 mb-xl-0 mb-4 align-self-stretch">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                        <div class="numbers">
+                            <p class="text-sm mb-0 text-uppercase font-weight-bold">Orders</p>
+                            <h5 class="font-weight-bolder">
+                            {{c2}}
+                            </h5>
+                            <p class="mb-0">
+                            <span class="text-success text-sm font-weight-bolder">{{c1}}</span> Cancelled
+                            </p>
+                        </div>
+                        </div>
+                        <div class="col-4 text-end">
+                        <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
+                            <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-lg-12 mb-lg-0 mb-4">
+        <div class="card z-index-2 h-100">
+            <div class="card-header pb-0 pt-3 bg-transparent">
+                <h3 class="text-capitalize">Overview</h3>
+            </div>
+            <div class="card-body p-3 row">
+                <div class="col-12 col-lg-4 my-3" id="container">
+                    <p class="text-center" style="font-weight: bold; color: #D81B60; font-size: 20px">Customers : {{ total_user }}</p>
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div class="col-12 col-lg-4 my-3" id="container">
+                    <p class="text-center" style="font-weight: bold; color: #D81B60; font-size: 20px">Total Orders : {{total_orders}}</p>
+                    <canvas id="myChart3"></canvas>
+                </div>
+                <div class="col-12 col-lg-4 my-3" id="container">
+                    <p class="text-center" style="font-weight: bold; color: #D81B60; font-size: 20px">Sold Prodcuts : {{total_products}}</p>
+                    <canvas id="myChart4"></canvas>
+                </div>
+                
+            </div>
+        </div>
+    </div> 
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script> 
+    var c_config = {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: {{ data1|safe }},
+                backgroundColor: ['#4CAF50', 'rgb(255, 99, 132)'],
+                borderWidth: 1 ,
+                label: 'Customer',
+            }],
+            labels: {{ data1_label|safe }}
+        },
+        options: {
+            responsive: true
+        },
+    };
+
+    var a_config = {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: {{ data3|safe }},
+                backgroundColor: ['rgb(255, 159, 64)', 'rgb(255, 99, 132)'],
+                borderWidth: 1 ,
+                label: 'Orders',
+            }],
+            labels: {{ data3_label|safe }}
+        },
+        options: {
+            responsive: true
+        },
+    };
+
+    var b_config = {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: {{ data4|safe }},
+                backgroundColor: ['rgb(54, 162, 235)', 'rgb(153, 102, 255)', 'rgb(75, 192, 192)'],
+                borderWidth: 1 ,
+                label: 'Category',
+            }],
+            labels: {{ data4_label|safe }}
+        },
+        options: {
+            responsive: true
+        },
+    };
+
+    const myChart1 = new Chart(
+    document.getElementById('myChart'),
+    c_config
+    );
+
+    const myChart3 = new Chart(
+    document.getElementById('myChart3'),
+    a_config
+    );
+    
+
+    const myChart4 = new Chart(
+    document.getElementById('myChart4'),
+    b_config
+    );
+
+</script>
+
+{% endblock %}

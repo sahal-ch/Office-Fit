@@ -1,0 +1,17 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit |
+Order Success {% endblock %} {% block content %}
+
+<div class="section-padding-100 clearfix">
+    <div class="container-fluid">
+        {% include 'alert.html' %}
+        <div class="row justify-content-center">
+            <div>
+                <h2 class="text-success">Order Success</h2>
+                <p>Thank you for shopping with us</p>
+                <a href="{% url 'home' %}" class="btn amado-btn">Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

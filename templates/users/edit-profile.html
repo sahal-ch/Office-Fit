@@ -1,0 +1,79 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit | My Account | Edit Profile
+{% endblock %} {% block content %}
+<div class="cart-table-area section-padding-100 pt-5">
+    <div class="container-fluid">
+        {% include 'alert.html' %}
+        <div class="row">
+            {% include 'user-dashboard.html' %}
+            <!--  -->
+            <div class="col-12 col-lg-8 mt-5">
+                <div class="card mt-5">
+                    <div class="card-header bg-white">
+                        <strong class="d-inline-block" style="color: #fbb710;">Edit Profile</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-end mb-3">
+                            {% if user_profile.profile_picture %}
+                            <img src="{{ user_profile.profile_picture.url }}" width="100" style="border-radius: 50%;" alt="Profile Picture">
+                            {% else %}
+                            <img src="https://www.w3schools.com/howto/img_avatar.png" width="100" style="border-radius: 50%;" alt="Profile Picture">
+                            {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form action="{% url 'edit-profile' %}" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="">First Name</label>
+                                            {{ user_form.first_name }}
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="">Last Name</label>
+                                            {{ user_form.last_name }}
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label for="">Phone Number</label>
+                                            {{ user_form.mobile }}
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label for="">Profile Picture</label>
+                                            {{ profile_form.profile_picture }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Address</label>
+                                        {{ profile_form.address }}
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="">City</label>
+                                            {{ profile_form.city }}
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="">State</label>
+                                            {{ profile_form.state }}
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="">Country</label>
+                                            {{ profile_form.country }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center my-3">
+                                        <input type="submit" value="Save Profile" class="btn amado-btn">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

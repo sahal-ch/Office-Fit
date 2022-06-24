@@ -1,0 +1,266 @@
+{% extends 'admin-index.html' %} {% load static %} {% block title %} OF Admin |
+Order Details {% endblock %} {% block content %}
+<div class="container-fluid px-4 pt-0 pb-5">
+    <div class="row justify-content-center">
+        {% include 'alert.html' %}
+        <div class="col-12 col-lg-10 card" style="border-radius: 10px">
+            <!--  -->
+            <div class="card-header text-center mt-3">
+                <h3 class="text-muted mb-0">
+                    Shipping Details of &nbsp;
+                    <span style="color: #d63384">{{order.user.full_name}}</span>
+                </h3>
+            </div>
+            <!--  -->
+            <div class="card-body px-2">
+                
+                <h2 class="lead fw-normal mb-0" style="color: #d63384">
+                    Ordered items
+                </h2>
+                    
+                <h3 class="small text-muted mb-0" style="letter-spacing: 0.8px;">
+                    Tracking id : {{order.tracking_no}}
+                </h3>
+                <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-3">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        Image
+                                    </th>
+
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        Product
+                                    </th>
+
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        Total
+                                    </th>
+
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        Status
+                                    </th>
+
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        Edit
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order_item %}
+                                <tr>
+                                    <td class="align-middle text-center">
+                                        <img height="100" width="100"
+                                    src="{{item.product.image_1.url}}"
+                                    class="img-fluid"
+                                    alt="Phone"
+                                />
+                                    </td>
+
+                                    <td
+                                        class="align-middle text-center align-middle text-center"
+                                    >
+                                        <div
+                                            class="d-flex flex-column justify-content-center"
+                                        >
+                                            <h6 class="mb-0 text-sm">
+                                                {{item.product.name}}
+                                            </h6>
+                                            <p
+                                                class="text-xs text-secondary mb-0"
+                                            >
+                                                price : &#8377; {{item.product.price}}
+                                            </p>
+                                        </div>
+                                    </td>
+
+                                    <td
+                                        class="align-middle text-center align-middle text-center"
+                                    >
+                                        <div
+                                            class="d-flex flex-column justify-content-center"
+                                        >
+                                            <h6 class="mb-0 text-sm">
+                                               &#8377; {{item.total}}
+                                            </h6>
+                                            <p
+                                                class="text-xs text-secondary mb-0"
+                                            >
+                                                Qty : {{item.quantity}}
+                                            </p>
+                                        </div>
+                                    </td>
+
+                                    <td
+                                        class="align-middle text-center text-sm"
+                                    >
+                                        <h5 style="color: #d63384;" class="mb-0">{{item.status | upper}}</h5>
+                                    </td>
+                                    
+                                    <td class="text-center">
+                                        {% if item.status == 'ordered' %}
+                                        
+                                            <a
+                                                href="{% url 'edit-shipping-product' item.id %}"
+                                                class="btn btn-success rounded-pill d-inline w-20"
+                                                >approve it as : Shipped</a
+                                            >
+                                            {% elif item.status == 'shipped' %}
+                                            <a
+                                                href="{% url 'edit-shipping-product' item.id %}"
+                                                class="btn btn-primary rounded-pill d-inline"
+                                                >approve it as : Out for Delivery</a
+                                            >
+                                            {% elif item.status == 'out_for_delivery' %}
+                                            <a
+                                                href="{% url 'edit-shipping-product' item.id %}"
+                                                class="btn btn-warning rounded-pill d-inline"
+                                                >approve it as : Delivered</a
+                                            >
+
+                                            {% elif item.status == 'delivered' %}
+                                            <p class="mb-0">Product Delivered</p>
+                                            
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                
+                <div class="card border my-4 p-3">
+                    <h4>Shipping Address</h4>
+                    <h6 class="card-title">Name : {{order.full_name}}</h6>
+
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Address : {{order.address}}, <span>{{order.city}}, {{order.pin_code}}, {{order.state}}, {{order.country}} </span>
+                    </h6>
+                    <h6> Mobile : {{order.mobile}}</h6>
+                    <h6>Landmark : {{order.landmark}}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .gradient-custom {
+        /* fallback for old browsers */
+        background: #cd9cf2;
+
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(
+            to top left,
+            rgba(205, 156, 242, 1),
+            rgba(246, 243, 255, 1)
+        );
+
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(
+            to top left,
+            rgba(205, 156, 242, 1),
+            rgba(246, 243, 255, 1)
+        );
+    }
+
+    .hh-grayBox {
+        background-color: #f8f8f8;
+        margin-bottom: 20px;
+        padding: 35px;
+        margin-top: 20px;
+    }
+    .pt45 {
+        padding-top: 45px;
+    }
+    .order-tracking {
+        text-align: center;
+        width: 33.33%;
+        position: relative;
+        display: block;
+    }
+    .order-tracking .is-complete {
+        display: block;
+        position: relative;
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+        border: 0px solid #afafaf;
+        background-color: #f7be16;
+        margin: 0 auto;
+        transition: background 0.25s linear;
+        -webkit-transition: background 0.25s linear;
+        z-index: 2;
+    }
+    .order-tracking .is-complete:after {
+        display: block;
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 7px;
+        top: -2px;
+        bottom: 0;
+        left: 5px;
+        margin: auto 0;
+        border: 0px solid #afafaf;
+        border-width: 0px 2px 2px 0;
+        transform: rotate(45deg);
+        opacity: 0;
+    }
+    .order-tracking.completed .is-complete {
+        border-color: #27aa80;
+        border-width: 0px;
+        background-color: #27aa80;
+    }
+    .order-tracking.completed .is-complete:after {
+        border-color: #fff;
+        border-width: 0px 3px 3px 0;
+        width: 7px;
+        left: 11px;
+        opacity: 1;
+    }
+    .order-tracking p {
+        color: #a4a4a4;
+        font-size: 16px;
+        margin-top: 8px;
+        margin-bottom: 0;
+        line-height: 20px;
+    }
+    .order-tracking p span {
+        font-size: 14px;
+    }
+    .order-tracking.completed p {
+        color: #000;
+    }
+    .order-tracking::before {
+        content: "";
+        display: block;
+        height: 3px;
+        width: calc(100% - 40px);
+        background-color: #f7be16;
+        top: 13px;
+        position: absolute;
+        left: calc(-50% + 20px);
+        z-index: 0;
+    }
+    .order-tracking:first-child:before {
+        display: none;
+    }
+    .order-tracking.completed:before {
+        background-color: #27aa80;
+    }
+</style>
+
+{% endblock %}

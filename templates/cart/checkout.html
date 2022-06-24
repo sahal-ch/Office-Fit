@@ -1,0 +1,337 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit |
+Checkout {% endblock %} {% block content %}
+
+<div class="cart-table-area section-padding-100 pt-2">
+    <div class="container-fluid">
+        {% include 'alert.html' %}
+        <div class="row">
+            {% if cart_items %}
+            
+            <div class="col-12 col-lg-8 pt-5">
+                {% if addresses %}
+                <h4 class="pl-0">Choose an Address</h4>
+                <form action="" id="adrs">
+                    {% for address in addresses %}
+                    <div class="row col-12">
+                        <div class="col-12 d-flex p-0 mb-2">
+                            <input class="align-self-start mt-3" type="radio" onchange="a('{{address.full_name}}','{{address.mobile}}', '{{address.address}}','{{address.landmark}}','{{address.city}}','{{address.state}}','{{address.country}}','{{address.pin_code}}')"
+                            id="{{address.id}}" name="address" value="{{address.id}}">
+                            <label for="html" class="col-12 p-0 m-0">
+                                <div class="col-12 mt-2 mb-2">
+                                    <div class="card p-3 mb-5 bg-white rounded" style="box-shadow: 0 6px 6px  rgba(0,0,0,0.08);">
+                                        <div class="card-body py-0">
+                                            <h5 class="card-title mb-2">Name : {{address.full_name}}</h5>
+                                            <p class="card-text mb-0 pl-0">Address : {{address.address}}</p>
+                                            <p class="card-text mb-0 pl-0">Phone : {{address.mobile}}</p>
+                                            <p class="card-text mb-0 pl-0">City : {{address.city}}</p>
+                                            <p class="card-text mb-0 pl-0">State : {{address.state}}</p>
+                                            <p class="card-text mb-0 pl-0">Country : {{address.country}}</p>
+                                            <p class="card-text mb-0 pl-0">Pin code : {{address.pin_code}}</p>
+                                            <p class="card-text mb-0 pl-0">Landmark : {{address.landmark}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </form>
+                {% endif %}
+                
+                <div class="checkout_details_area mt-2 clearfix">
+                    <div class="cart-title">
+                        <h2 class="mb-3">Checkout</h2>
+                    </div>
+
+                    <form action="{% url 'place-order' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="full_name"
+                                    name="full_name"
+                                    placeholder="Full Name"
+                                    required
+                                />
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="mobile"
+                                    placeholder="Phone Number"
+                                    name="mobile"
+                                    min="0"
+                                    required
+                                />
+                            </div>
+                            <div class="col-12 mb-3">
+                                <textarea
+                                    id="address"
+                                    class="form-control"
+                                    name="address"
+                                    placeholder="Address"
+                                    required
+                                ></textarea>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="landmark"
+                                    name="landmark"
+                                    placeholder="Land Mark"
+                                    required
+                                />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control mb-3"
+                                    id="country"
+                                    placeholder="Country"
+                                    name="country"
+                                    required
+                                />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control mb-3"
+                                    id="state"
+                                    placeholder="State"
+                                    name="state"
+                                    required
+                                />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control mb-3"
+                                    id="city"
+                                    placeholder="City"
+                                    name="city"
+                                    required
+                                />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control mb-3"
+                                    id="pin_code"
+                                    placeholder="Pin code"
+                                    name="pin_code"
+                                    required
+                                />
+                            </div>
+                            <div class="col-12 mb-3">
+                                <textarea
+                                    id="message"
+                                    class="form-control"
+                                    name="message"
+                                    placeholder="Leave a comment about your order (not required)"
+                                ></textarea>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="cart-summary pb-4">
+                    <h5 class="text-center mb-2">Cart Items</h5>
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th
+                                    class="p-0 d-flex justify-content-center align-items-center"
+                                >
+                                    Name
+                                </th>
+                                <th
+                                    class="p-0 d-flex justify-content-center align-items-center"
+                                >
+                                    Price
+                                </th>
+                                <th
+                                    class="p-0 d-flex justify-content-center align-items-center"
+                                >
+                                    Quantity
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cart_item in cart_items %}
+                            <tr class="align-items-center mb-2">
+                                <td class="cart_product_img p-0 text-center">
+                                    <a href="{{ cart_item.product.get_url }}"
+                                        ><img
+                                            src="{{ cart_item.product.image_1.url }}"
+                                            alt="Product"
+                                    /></a>
+                                </td>
+                                <td
+                                    class="cart_product_desc d-flex flex-column p-0 text-center"
+                                >
+                                    <a href="{{ cart_item.product.get_url }}"
+                                        >{{ cart_item.product.name }}</a
+                                    >
+                                </td>
+                                <td
+                                    class="price d-flex flex-column p-0 text-center"
+                                >
+                                    <p
+                                        style="font-size: 13px; color: #333"
+                                        class="mb-0"
+                                    >
+                                        &#8377; {{ cart_item.product.price }}
+                                    </p>
+                                </td>
+
+                                <td class="qty p-0 text-center">
+                                    <p
+                                        class="mb-0"
+                                        style="font-size: 12px; color: #333"
+                                    >
+                                        {{ cart_item.quantity }}
+                                    </p>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <!--  -->
+                    <h5 class="pt-5">Cart Total</h5>
+                    <ul class="summary-table pl-0">
+                        <li>
+                            <span>Subtotal : </span>
+                            <span>&#8377; {{ total }}</span>
+                        </li>
+                        <li>
+                            <span>Tax : </span>
+                            <span>&#8377; {{ tax }}</span>
+                        </li>
+                        <li>
+                            <span>Grand Total:</span>
+                            <span>&#8377; {{ grand_total }}</span>
+                        </li>
+                    </ul>
+
+                    
+
+                    <div class="cart-btn mt-5">
+                        <button type="submit" class="btn amado-btn w-100 mb-3">Place Order</button>
+
+                    </div>
+
+                    <div class="cart-btn mt-3">
+                        <a
+                            href="{% url 'shop' %}"
+                            class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center"
+                            style="height: 50px"
+                            >Continue Shopping</a
+                        >
+                    </div>
+                </div>
+                </form>
+                {% else %}
+                <h2 style="font-weight: 800" class="text-danger mt-5 pt-5">
+                    Your cart is empty!!!
+                </h2>
+                <a
+                    class="btn amado-btn my-5 mx-3"
+                    style="width: 175px"
+                    href="{% url 'shop' %}"
+                    >Shop with us</a
+                >
+                {% endif %}
+
+                <!--  -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--  -->
+<script>
+    function a(full_name, mobile, address, landmark, city, state, country, pin_code) {
+        document.getElementById('full_name').value = full_name
+        document.getElementById('mobile').value = mobile
+        document.getElementById('address').value = address
+        document.getElementById('landmark').value = landmark
+        document.getElementById('city').value = city
+        document.getElementById('state').value = state
+        document.getElementById('country').value = country
+        document.getElementById('pin_code').value = pin_code
+
+    }
+</script>
+
+<style>
+    .error{
+        color: red;
+    }
+</style>
+<script>
+    $(document).ready(function ($) {
+        console.log("hai");
+        $("#address-form").validate({
+            rules: {
+                first_name:{
+                    required: true
+                },
+                last_name:{
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                address1:{
+                    required:true
+                },
+                city:{
+                    required:true
+                },
+                state:{
+                    required:true
+                },
+                pincode:{
+                    required:true,
+                    minlength:6,
+                    maxlength:6
+                },
+                phone:{
+                    required:true,
+                    minlength:10,
+                    maxlength:10
+                },
+            },
+            messages: {
+                email:{
+                    required: "Please enter your email",
+                },
+                phone:{
+                    required:"Please enter a phone number",
+                    minlength:"Please provide a valid number",
+                    maxlength:"Please provide a valid number"
+                },
+                pincode:{
+                    required:"Pincode is required ",
+                    minlength:"Please provide a valid pincode",
+                    maxlength:"Please provide a valid pincode"
+                },
+                
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+
+        });
+    });
+</script>
+
+{% endblock %}

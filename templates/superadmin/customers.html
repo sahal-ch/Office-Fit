@@ -1,0 +1,152 @@
+{% extends 'admin-index.html' %} {% load static %} {% block title %} OF Admin |
+Customers {% endblock title %} {% block content %}
+
+<div class="container-fluid px-4 pt-0 pb-4">
+    <div class="row">
+        {% include 'alert.html' %}
+        <h3>Customers</h3>
+        <div class="col-12">
+            <div class="card my-4">
+                <div
+                    class="card-header p-0 position-relative mt-n4 mx-3 z-index-2"
+                >
+                    <div
+                        class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center flex-wrap"
+                    >
+                        <h6 class="text-white text-capitalize ps-3">
+                            CUSTOMERS
+                        </h6>
+                        <div class="mx-3" ">
+                            <form method="GET" class="form-inline d-flex" style="gap: 10px">
+                                <input
+                                    class="form-control mr-sm-2"
+                                    type="search"
+                                    placeholder="Search Customer"
+                                    aria-label="Search"
+                                    name="q" style="background-color: #fff; width: 250px; padding-left: 10px"
+                                />
+                                <button
+                                    class="badge bg-gradient-success"
+                                    type="submit" style="border: none;"
+                                >
+                                    Search
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table
+                            id="text_id"
+                            class="table align-items-center mb-0"
+                        >
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        Customer Name
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                    >
+                                        Email
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                    >
+                                        Mobile Number
+                                    </th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        Status
+                                    </th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        permission
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in user %}
+                                <tr>
+                                    <td style="padding-left: 20px;">
+                                        <h6 class="mb-0 text-sm">
+                                            {{user.first_name}}&nbsp;{{user.last_name}}
+                                        </h6>
+                                    </td>
+                                    <td>
+                                        <h6
+                                            class="text-sm font-weight-bold mb-0"
+                                        >
+                                            {{user.email}}
+                                        </h6>
+                                    </td>
+                                    <td>
+                                        <h6
+                                            class="text-sm font-weight-bold mb-0"
+                                        >
+                                            {{user.mobile}}
+                                        </h6>
+                                    </td>
+                                    {% if user.is_active %}
+                                    <td
+                                        class="align-middle text-center text-sm"
+                                    >
+                                        <span
+                                            class="badge badge-sm bg-gradient-success"
+                                            >active</span
+                                        >
+                                    </td>
+                                    {% else %}
+                                    <td
+                                        class="align-middle text-center text-sm"
+                                    >
+                                        <span
+                                            class="badge badge-sm bg-gradient-danger"
+                                            style="color: #fff"
+                                            >blocked</span
+                                        >
+                                    </td>
+                                    {% endif %}
+                                    <td class="align-middle text-center">
+                                        {% if user.is_active %}
+                                        <a
+                                            href="{% url 'customer-block' user.id %}"
+                                            class="badge badge-sm bg-gradient-danger"
+                                            data-toggle="tooltip"
+                                            data-original-title="Edit user"
+                                            style="color: #fff"
+                                        >
+                                            block user
+                                        </a>
+                                        {% else %}
+                                        <a
+                                            href="{% url 'customer-block' user.id %}"
+                                            class="badge badge-sm bg-gradient-success"
+                                            style="color: #fff"
+                                            data-toggle="tooltip"
+                                            data-original-title="Edit user"
+                                        >
+                                            unblock user
+                                        </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+</div>
+
+{% endblock content %}

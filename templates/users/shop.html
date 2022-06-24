@@ -1,0 +1,275 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit | Shop
+{% endblock %} {% block content %}
+
+<div class="shop_sidebar_area">
+    <!-- ##### Single Widget ##### -->
+    <div class="widget catagory mt-2 mb-50">
+        <!-- Widget Title -->
+        <h6 class="widget-title mb-2">Catagories</h6>
+
+        <!--  Catagories  -->
+        <div class="catagories-menu">
+            <ul class="pl-1">
+                <li class="{% if '/shop/' == request.path %} active {% endif %}">
+                    <a class="pl-1 py-2" href="{% url 'shop' %}">All Products</a>
+                </li>
+
+                <!-- This categories is the keyword from return value of menu_link function in the context_processors.py -->
+                {% for category in categories %}
+                <li class="{% if '/shop/category/category.slug/' == request.path %} active {% endif %}">
+                    <a class="pl-0 py-2" href="{{category.get_url}}">
+                        {{ category.category_name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- ##### Single Widget ##### -->
+        <div class="widget color mb-50 mt-5">
+            <!-- Widget Title -->
+            <h6 class="widget-title mb-2">Price</h6>
+
+            <div class="widget-desc">
+                <form action="{% url 'filter-product' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="number" name="min_price" id="" class="form-control my-3" placeholder="minimum price">
+                    <input type="number" name="max_price" id="" class="form-control my-3" placeholder="maximum price">
+                    <input type="submit" value="Filter" class="btn btn-block btn-primary my-3">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="amado_product_area section-padding-100">
+    <div class="container-fluid">
+        {% include 'alert.html' %}
+        <div class="row">
+            <div class="col-12">
+                <div
+                    class="product-topbar d-flex align-items-center justify-content-between flex-wrap"
+                >
+                    <!-- Total Products -->
+                    <div class="total-products">
+                        {% if product_count %}
+                        <p style="letter-spacing: 0.5px">
+                            <strong>{{product_count}}</strong> items found
+                        </p>
+                        {% else %}
+                        <p style="letter-spacing: 0.5px">
+                            <strong>0</strong> items found
+                        </p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Sorting -->
+                    <div class="product-sorting d-flex">
+                        
+                        <form
+                            method="GET"
+                            action="{% url 'search' %}"
+                            style="width: 350px"
+                            class="d-flex align-items-center col-10 col-sm-12 col-md-10 col-lg-12"
+                        >
+                            <div class="input-group mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Search Product"
+                                    aria-label="Recipient's username"
+                                    aria-describedby="button-addon2"
+                                    name="keyword"
+                                />
+                                <button
+                                    class="btn btn-warning d-flex justify-content-center align-items-center"
+                                    type="submit"
+                                    id="button-addon2"
+                                >
+                                    <i
+                                        style="color: #fff"
+                                        class="fa-solid fa-magnifying-glass"
+                                    ></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-between">
+            <!-- Single Product Area -->
+            {% for product in products %}
+            <div
+                class="col-10 col-sm-6 col-md-11 col-xl-5 mb-5 mx-4 custom-card"
+                style="box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08)"
+            >
+                <div class="single-product-wrapper">
+                    <!-- Product Image -->
+                    <div class="product-img">
+                        <a href="{{product.get_url}}">
+                            <img src="{{product.image_1.url}}" alt="" />
+                        </a>
+                    </div>
+
+                    <!-- Product Description -->
+                    <div
+                        class="product-description d-flex align-items-center justify-content-between"
+                    >
+                        <!-- Product Meta Data -->
+                        <div class="product-meta-data">
+                            <div class="line"></div>
+                            <p class="product-price" style="font-size: 18px">
+                                &#x20B9; {{product.price}}
+                            </p>
+                            <a href="{{product.get_url}}">
+                                <h6>{{product.name}}</h6>
+                            </a>
+                        </div>
+                        <!-- Ratings & Cart -->
+                        <div class="ratings-cart text-right rating-star">
+                            <span>
+                                <i class="fa fa-star{% if product.average_rating < 0.5 %}-o{% elif product.average_review >= 0.5 and product.average_review < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+
+                                <i class="fa fa-star{% if product.average_rating < 1.5 %}-o{% elif product.average_review >= 1.5 and product.average_review < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+
+                                <i class="fa fa-star{% if product.average_rating < 2.5 %}-o{% elif product.average_review >= 2.5 and product.average_review < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+
+                                <i class="fa fa-star{% if product.average_rating < 3.5 %}-o{% elif product.average_review >= 3.5 and product.average_review < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+
+                                <i class="fa fa-star{% if product.average_rating < 4.5 %}-o{% elif product.average_review >= 4.5 and product.average_review < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            </span>
+                            <span style="color: #777; font-size: 14px">( {{ product.count_rating }} )</span>
+
+                            <div
+                                class="cart d-flex align-items-center justify-content-between mt-2"
+                            >
+                                <a
+                                    href="{% url 'add-to-wishlist' product.id %}"
+                                    class="mr-2"
+                                >
+                                    <i
+                                        class="fa-regular fa-heart"
+                                        style="
+                                            color: rgba(255, 0, 0, 0.7) !important;
+                                            font-size: 20px;
+                                        "
+                                    ></i
+                                ></a>
+                                {% if product.stock > 0 %}
+                                <a
+                                    href="{% url 'add-to-cart' product.id %}"
+                                    data-toggle="tooltip"
+                                    data-placement="left"
+                                    title="Add to Cart"
+                                    >
+                                    <i
+                                        class="fa-solid fa-cart-shopping"
+                                        style="
+                                            font-size: 20px;
+                                            color : #fbb710 !important;
+                                        "
+                                    ></i
+                                >
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <!-- Pagination -->
+                <nav aria-label="navigation">
+                    {% if products.has_other_pages %}
+                    <ul class="pagination justify-content-end mt-50">
+                        {% if products.has_previous %}
+                        <li
+                            class="page-item mx-1"
+                            style="border: 1px solid #fbb710"
+                        >
+                            <a
+                                class="page-link"
+                                href="?page={{products.previous_page_number}}"
+                                ><i class="fa-solid fa-chevron-left"></i
+                            ></a>
+                        </li>
+                        {% else %}
+                        <li
+                            class="page-item mx-1 disabled"
+                            style="border: 1px solid #fbb710"
+                        >
+                            <span class="page-link"
+                                ><i
+                                    style="color: #999"
+                                    class="fa-solid fa-chevron-left"
+                                ></i
+                            ></span>
+                        </li>
+                        {% endif %} {% for i in products.paginator.page_range %}
+                        {% if products.number == i %}
+                        <li
+                            class="page-item mx-1 active"
+                            style="border: 1px solid #fbb710"
+                        >
+                            <a class="page-link" href="?page={{i}}">{{i}}</a>
+                        </li>
+                        {% else %}
+
+                        <li
+                            class="page-item mx-1"
+                            style="border: 1px solid #fbb710"
+                        >
+                            <a class="page-link" href="?page={{i}}">{{i}}</a>
+                        </li>
+                        {% endif %} {% endfor %} {% if products.has_next %}
+                        <li
+                            class="page-item mx-1"
+                            style="border: 1px solid #fbb710"
+                        >
+                            <a
+                                class="page-link"
+                                href="?page={{products.next_page_number}}"
+                                ><i class="fa-solid fa-chevron-right"></i
+                            ></a>
+                        </li>
+                        {% else %}
+                        <li
+                            class="page-item mx-1 disabled"
+                            style="border: 1px solid #fbb710"
+                        >
+                            <span class="page-link"
+                                ><i
+                                    style="color: #999"
+                                    class="fa-solid fa-chevron-right"
+                                ></i
+                            ></span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .rating-star i {
+        color: #ffb503 !important;
+    }
+
+    .custom-card {
+        transition: all 0.3s;
+    }
+
+    .custom-card:hover {
+        transform: scale(1.02);
+    }
+</style>
+
+{% endblock %}

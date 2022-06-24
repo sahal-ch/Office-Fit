@@ -1,0 +1,71 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit | My Account | Orders
+{% endblock %} {% block content %}
+<div class="cart-table-area section-padding-100 pt-5">
+    <div class="container-fluid">
+        
+        <div class="row">
+            {% include 'user-dashboard.html' %}
+            <!--  -->
+            <div class="col-12 col-lg-8 mt-5">
+                <div class="card mt-5">
+                    <div class="card-header bg-white">
+                        <strong class="d-inline-block" style="color: #fbb710;">Your Order History</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-around">
+                            
+                            <div class="col-lg-12 px-0">
+                            {% if orders %}
+                            <div class="table-responsive">
+                                <table class="table table-striped table-dark">
+                                    <thead>
+                                        <tr>
+                                            <th class="py-1 d-flex align-items-center" style="color: #fff; font-size: 14px; letter-spacing: 1px" scope="col">Order #</th>
+                                            <th class="py-1 d-flex align-items-center" style="color: #fff; font-size: 14px; letter-spacing: 1px" scope="col">Billing Name</th>
+                                            <th class="py-1 d-flex align-items-center" style="color: #fff; font-size: 14px; letter-spacing: 1px" scope="col">Phone</th>
+                                            <th class="py-1 d-flex align-items-center" style="color: #fff; font-size: 14px; letter-spacing: 1px" scope="col">Order Total</th>
+                                            <!-- <th class="py-1 d-flex align-items-center" style="color: #fff; font-size: 14px; letter-spacing: 1px" scope="col">Date</th> -->
+                                            <th class="py-1 d-flex align-items-center" style="color: #fff; font-size: 14px; letter-spacing: 1px" scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in orders %}
+                                        <tr>
+                                            
+                                            <td><a style="color: #fbb710; font-size: 16px; font-weight: 700;" href="{% url 'order-details' order.tracking_no %}">{{ order.tracking_no }}</a></td>
+                                            <td>{{ order.full_name }}</td>
+                                            <td>{{ order.mobile }}</td>
+                                            <td>&#8377; {{ order.total_price }}</td>
+                                            <!-- <td>{{ order.created_at|date }}</td> -->
+                                            
+                                            <td>
+                                                <a
+                                                    href="{% url 'order-details' order.tracking_no %}"
+                                                    class="btn btn-outline-light btn-sm d-flex justify-content-center align-items-center"
+                                                >
+                                                    View Order
+                                                </a>
+                                            </td>
+                                            
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                    
+                    {% else %}
+                    <div class="d-flex flex-column align-items-center">
+                        <h3 class="text-danger">You have No Orders Yet!</h3>
+                        <a class="btn amado-btn my-3" href="{% url 'shop' %}">Shop with us</a>
+                    </div>
+                    {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

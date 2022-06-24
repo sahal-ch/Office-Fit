@@ -1,0 +1,31 @@
+<div class="col-12 col-lg-4">
+    <div class="cart-title mt-50">
+        <h3>
+            Hello <a href="{% url 'my-account' %}" class="mb-4" style="font-size: 28px; font-weight: 600; color: #fbb710;">{{ request.user.first_name }}</a>
+        </h3>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a class="list-group-item d-flex justify-content-center {% if '/my-account/' == request.path %} active {% endif %}" style="font-size: 16px;" href="{% url 'my-account' %}">Dashboard</a>
+            </li>
+
+            <li class="list-group-item">
+                <a class="list-group-item d-flex justify-content-center {% if '/my-account/my-address/' in request.path %} active {% endif %}" style="font-size: 16px;" href="{% url 'my-address' %}">Addresses</a>
+            </li>
+
+            <li class="list-group-item">
+                <a class="list-group-item d-flex justify-content-center {% if '/my-account/my-orders/' in request.path %} active {% endif %}" style="font-size: 16px;" href="{% url 'my-orders' %}">Order History</a>
+            </li>
+            <li class="list-group-item">
+                <a class="list-group-item d-flex justify-content-center {% if '/my-account/edit-profile/' == request.path %} active {% endif %}" style="font-size: 16px;" href="{% url 'edit-profile' %}">Edit Profile</a>
+            </li>
+            <li class="list-group-item">
+                <a class="list-group-item d-flex justify-content-center {% if '/my-account/change-password/' == request.path %} active {% endif %} " style="font-size: 16px;" href="{% url 'change-password' %}">Reset Password</a>
+            </li>
+            {% if user is not is_verified %}
+            <li class="list-group-item">
+                <a class="list-group-item d-flex justify-content-center {% if '/my-account/verify-email/' in request.path %} active {% endif %} " style="font-size: 16px;" href="{% url 'verify-email' %}">Verify Email</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

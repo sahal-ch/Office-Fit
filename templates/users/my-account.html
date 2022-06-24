@@ -1,0 +1,48 @@
+{% extends 'index.html' %} {% load static %} {% block title %} Office Fit | My Account
+{% endblock %} {% block content %}
+<div class="cart-table-area section-padding-100 pt-5">
+    <div class="container-fluid">
+        {% include 'alert.html' %}
+        <div class="row">
+            {% include 'user-dashboard.html' %}
+            <!--  -->
+            <div class="col-12 col-lg-8 mt-5">
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <div class="row justify-content-around">
+                            <div class="card col-lg-5 text-center mb-3">
+                                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                    <h5 class="card-title" style="border-bottom: 2px solid;">Total Orders</h5>
+                                    {% if orders_count > 0 %}
+                                    <h4>{{ orders_count }}</h4>
+                                    <a href="{% url 'my-orders' %}" style="font-size: 16px;" class="btn amado-btn">View Orders</a>
+                                    {% else  %}
+                                    <p class="text-danger">You have no orders yet</p>
+                                    <a href="{% url 'shop' %}" class="btn amado-btn">Shop with Us</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="card col-lg-5 text-center mb-3">
+                                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                    {% if user_profile.profile_picture %}
+                                   <a href="{% url 'edit-profile' %}">
+                                        <img src="{{ user_profile.profile_picture.url }}" alt="User Profile Pic" width="75" height="75" style="border-radius: 50%;" class="avatar mb-3">
+                                   </a>
+                                   {% else %}
+                                   <a href="{% url 'edit-profile' %}">
+                                        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="User Profile Pic" width="75" height="75" style="border-radius: 50%;" class="avatar mb-3">
+                                   </a>
+                                   {% endif %}
+                                   <p>email : <span style="color: #fbb710;">{{ user.email }}</span></p>
+                                   <p>mobile number : <span style="color: #fbb710;">{{ user.mobile }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

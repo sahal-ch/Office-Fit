@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <!-- Favicon  -->
+        <link rel="icon" href="{% static 'img/core-img/fav.jpg' %}" />
+        <title>OF Admin | Delete Product</title>
+        <!--     Fonts and icons     -->
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"
+        />
+        <!-- Nucleo Icons -->
+        <link
+            href="{% static 'admin/css/nucleo-icons.css' %}"
+            rel="stylesheet"
+        />
+        <link href="{% static 'admin/css/nucleo-svg.css' %}" rel="stylesheet" />
+        <!-- Font Awesome Icons -->
+        <script
+            src="https://kit.fontawesome.com/42d5adcbca.js"
+            crossorigin="anonymous"
+        ></script>
+        <!-- Material Icons -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+            rel="stylesheet"
+        />
+        <!-- CSS Files -->
+        <link
+            id="pagestyle"
+            href="{% static 'admin/css/material-dashboard.css' %}"
+            rel="stylesheet"
+        />
+    </head>
+
+    <body class="bg-gray-200">
+        <div class="container position-sticky z-index-sticky top-0">
+            <div class="row">
+                <div class="col-12"></div>
+            </div>
+        </div>
+        <main class="main-content mt-0">
+            <div
+                class="page-header align-items-start min-vh-100"
+                style="
+                    background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');
+                "
+            >
+                <span class="mask bg-gradient-dark opacity-6"></span>
+                <div class="container my-auto">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-8 col-12 mx-auto">
+                            <p style="color: #fff; text-align: center">
+                                Are you sure you want to delete the product
+                                <strong>"{{product.name}}"</strong>???
+                            </p>
+
+                            <div class="card z-index-0 fadeIn3 fadeInBottom">
+                                <div class="card-body">
+                                    <form
+                                        role="form"
+                                        class="text-start"
+                                        method="POST"
+                                    >
+                                        {% csrf_token %}
+                                        {% include 'alert.html' %}
+
+                                        <a
+                                            href="{% url 'products' %}"
+                                            style="color: #fff"
+                                            class="btn bg-gradient-success w-100 my-4 mb-2"
+                                            >No, I changed my mind</a
+                                        >
+                                        <button
+                                            type="submit"
+                                            class="btn bg-gradient-danger w-100 my-4 mb-2"
+                                        >
+                                            Yes, Delete for sure!
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!--   Core JS Files   -->
+        <script src="{% static 'admin/js/core/popper.min.js' %}"></script>
+        <script src="{% static 'admin/js/core/bootstrap.min.js' %}"></script>
+        <script src="{% static 'admin/js/plugins/perfect-scrollbar.min.js' %}"></script>
+        <script src="{% static 'admin/js/plugins/smooth-scrollbar.min.js' %}"></script>
+        <script>
+            var win = navigator.platform.indexOf("Win") > -1;
+            if (win && document.querySelector("#sidenav-scrollbar")) {
+                var options = {
+                    damping: "0.5",
+                };
+                Scrollbar.init(
+                    document.querySelector("#sidenav-scrollbar"),
+                    options
+                );
+            }
+        </script>
+        <!-- Github buttons -->
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+        <script src="{% static 'admin/js/material-dashboard.min.js' %}"></script>
+    </body>
+</html>

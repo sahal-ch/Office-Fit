@@ -1,0 +1,52 @@
+{% extends 'admin-index.html' %} {% load static %} {% block title %} OF Admin |
+Add Category {% endblock %} {% block content %}
+<div class="container-fluid py-4">
+
+    <div
+        class="card-body"
+        style="max-width: 1200px; display: flex; justify-content: center"
+    >
+        <form
+            role="form"
+            class="text-start"
+            style="
+                background-color: #fff;
+                padding: 24px;
+                width: 800px !important;
+                box-shadow: 0 10px 36px 0 rgba(0, 0, 0, 0.1),
+                    0 0 10px rgba(0, 0, 0, 0.06),
+                    0 10px 36px 0 rgba(0, 0, 0, 0.1);
+                border-radius: 9px;
+            "
+            method="POST"
+            enctype="multipart/form-data"
+        >
+            {% csrf_token %}
+            {% include 'alert.html' %}
+            <h2 class="text-uppercase text-sm text-center">Add Product</h2>
+            <hr style="margin-bottom: 20px" />
+            {% for field in form.visible_fields %}
+            <div
+                class="input-group input-group-outline my-3"
+                style="
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 5px;
+                "
+            >
+                <span style="width: 100px">{{field.label_tag}}</span> {{field}}
+            </div>
+            {% endfor %}
+
+            <div class="text-center">
+                <button
+                    type="submit"
+                    class="btn bg-gradient-primary w-30 my-4 mb-2"
+                >
+                    Add Category
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

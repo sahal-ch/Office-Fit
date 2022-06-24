@@ -1,0 +1,100 @@
+{% extends 'admin-index.html' %} {% load static %} {% block title %} OF Admin |
+Orders {% endblock title %} {% block content %}
+<div class="container-fluid px-4 pt-0 pb-4">
+    <div class="row">
+        {% include 'alert.html' %}
+        <h3>Orders</h3>
+        <div class="col-12">
+            <div class="card my-4">
+                <div
+                    class="card-header p-0 position-relative mt-n4 mx-3 z-index-2"
+                >
+                    <div
+                        class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex align-items-center justify-content-between flex-wrap"
+                    >
+                        <h6 class="text-white text-capitalize ps-3">
+                            Orders
+                        </h6>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        User
+                                    </th>
+
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        Tracking No.
+                                    </th>
+
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        Payment Method
+                                    </th>
+
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    >
+                                        Mobile no.
+                                    </th>
+                                    <th
+                                        class="text-center text-uppercase font-weight-bolder opacity-7"
+                                    ></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td class="align-middle text-center">
+                                        {{ order.user.first_name }}
+                                    </td>
+
+                                    <td
+                                        class="align-middle text-center align-middle text-center"
+                                    >
+                                        <a href="{% url 'ordered-products' order.tracking_no %}" style="font-weight: bold;">{{ order.tracking_no }}</a>
+                                    </td>
+
+                                    <td
+                                        class="align-middle text-center text-sm"
+                                    >
+                                        {% if order.payment_method %}
+                                        {{ order.payment_method }}
+                                        {% else %}
+                                        <a href="{% url 'delete-order' order.tracking_no %}" class="badge bg-gradient-danger" style="color: #fff" onclick="return confirm('Are you sure you want to delete this {{order.tracking_no}} order by {{order.user.first_name}}?')">Delete</a>
+                                        {% endif %}
+                                    </td>
+
+                                    <td
+                                        class="align-middle text-center text-sm"
+                                    >
+                                        {{ order.mobile }}
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <a
+                                            href="{% url 'ordered-products' order.tracking_no %}"
+                                            class="badge badge-sm bg-gradient-success"
+                                            style="color: #fff"
+                                            >View</a
+                                        >
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
