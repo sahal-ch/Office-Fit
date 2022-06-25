@@ -26,8 +26,8 @@
                             <p class="text-dark">Order Status : <span class="text-danger" style="font-weight: 500; font-size: 14px; letter-spacing: 0.8px;">{{ item.status | upper }}</span></p>
                             {% endif %}
 
-                            <div class="d-flex mb-3" style="gap: 30px">
-                                <div class="col-12 col-md-6">
+                            <div class="d-flex flex-wrap mb-3 col-12 px-0 justify-content-between">
+                                <div class="col-12 col-md-6 mt-2">
                                     <a href="{{ item.product.get_url }}">
                                         <img
                                         src="{{ item.product.image_1.url }}"
@@ -36,7 +36,7 @@
                                         />
                                     </a>
                                 </div>
-                                <div class="d-flex flex-column justify-content-between col-12 col-md-6">
+                                <div class="d-flex flex-column justify-content-between col-12 col-md-6 mt-2">
                                     
                                     <p class="my-0">Price : ₹ {{item.product_price}}</p>
                                     <p class="my-0">Qty : {{ item.quantity }}</p>
@@ -44,7 +44,6 @@
                                     <p class="my-0">Total : <strong> ₹ {{ item.total }}</strong></p>
                                     
                                 </div>
-                                
                             </div>
                             <!--  -->
                             {% if item.status == 'cancelled' %}
