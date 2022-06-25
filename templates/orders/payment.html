@@ -13,13 +13,13 @@
                     <div class="card my-3">
                         <h5 class="card-header">Billing Address</h5>
                         <div class="card-body">
-                            <p class="card-text">Name : {{ order.full_name }}</p>
-                            <p class="card-text">Address : {{ order.address }}</p>
-                            <p class="card-text">mobile Number : {{ order.mobile }}</p>
-                            <p class="card-text">City : {{ order.city }}</p>
-                            <p class="card-text">Pin code : {{ order.pin_code }}</p>
-                            <p class="card-text">State : {{ order.state }}</p>
-                            <p class="card-text">Country : {{ order.country }}</p>
+                            <p class="card-text mb-0">Name : {{ order.full_name }}</p>
+                            <p class="card-text mb-1">Address : {{ order.address }}</p>
+                            <p class="card-text mb-0">mobile Number : {{ order.mobile }}</p>
+                            <p class="card-text mb-0">City : {{ order.city }}</p>
+                            <p class="card-text mb-0">Pin code : {{ order.pin_code }}</p>
+                            <p class="card-text mb-0">State : {{ order.state }}</p>
+                            <p class="card-text mb-0">Country : {{ order.country }}</p>
                             {% if order.message %}
                             <p class="card-text"> Order Note : {{ order.message }}</p>
                             {% endif %}
@@ -28,8 +28,8 @@
                     
                     <div class="card my-3">
                         <h5 class="card-header">Review Products</h5>
-                        <div class="card-body">
-                            <table class="table table-responsive">
+                        <div class="card-body px-0">
+                            <table class="table table-responsive mb-0">
                         <thead>
                             <tr>
                                 <th></th>
@@ -57,13 +57,13 @@
                                     <a href="{{ cart_item.product.get_url }}"
                                         ><img
                                             src="{{ cart_item.product.image_1.url }}"
-                                            alt="Product"
+                                            alt="Product" style="max-height: 100px;"
                                     /></a>
                                 </td>
                                 <td
                                     class="cart_product_desc d-flex flex-column p-0 text-center"
                                 >
-                                    <a href="{{ cart_item.product.get_url }}"
+                                    <a href="{{ cart_item.product.get_url }}" style="font-size: 14px;"
                                         >{{ cart_item.product.name }}</a
                                     >
                                 </td>
@@ -71,7 +71,7 @@
                                     class="price d-flex flex-column p-0 text-center"
                                 >
                                     <p
-                                        style="font-size: 13px; color: #333"
+                                        style="font-size: 14px; color: #333; font-weight: 600;"
                                         class="mb-0"
                                     >
                                         &#8377; {{ cart_item.product.price }}
@@ -81,7 +81,7 @@
                                 <td class="qty p-0 text-center">
                                     <p
                                         class="mb-0"
-                                        style="font-size: 12px; color: #333"
+                                        style="font-size: 14px; color: #333"
                                     >
                                         {{ cart_item.quantity }}
                                     </p>
@@ -110,7 +110,7 @@
                             </li>
                             <li>
                                 <span>Grand Total : </span>
-                                <span>&#8377; {{ grand_total }}</span>
+                                <span style="font-weight: 600;">&#8377; {{ grand_total }}</span>
                             </li>
                         </ul>
                         <div class="cart-btn mt-100">

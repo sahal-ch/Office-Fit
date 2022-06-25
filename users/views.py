@@ -335,7 +335,7 @@ def search(request) :
     if 'keyword' in request.GET :
         keyword = request.GET['keyword']
         if keyword :
-            products = Product.objects.order_by('-created_on').filter(Q(description__icontains = keyword) | Q(name__icontains = keyword))
+            products = Product.objects.order_by('-created_on').filter(Q(description__icontains = keyword) | Q(name__icontains = keyword) | Q(category__category_name__icontains = keyword))
             
             paginator = Paginator(products, 6)
             page = request.GET.get('page')

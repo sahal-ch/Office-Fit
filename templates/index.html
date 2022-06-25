@@ -43,7 +43,7 @@
                 <!-- Navbar Brand -->
                 <div class="amado-navbar-brand">
                     <a href="{% url 'home' %}"
-                        ><img
+                        ><img style="height: 32px !important;"
                             src="{% static 'img/core-img/logo-1.png' %}"
                             alt=""
                     /></a>
@@ -86,13 +86,13 @@
                         <li class="{% if '/' == request.path %} active {% endif %}">
                             <a href="{% url 'home' %}">Home</a>
                         </li>
-                        <li class="{% if '/shop/' == request.path %} active {% endif %}">
+                        <li class="{% if '/shop/' in request.path %} active {% endif %}">
                             <a href="{% url 'shop' %}">Shop</a>
                         </li>
-                        <li class="{% if '/wishlist/' == request.path %} active {% endif %}">
+                        <li class="{% if '/wishlist/' in request.path %} active {% endif %}">
                             <a href="{% url 'wishlist' %}"> Wishlist </a>
                         </li>
-                        <li class="{% if '/cart/' == request.path %} active {% endif %}">
+                        <li class="{% if '/cart/' in request.path %} active {% endif %}">
                             <a href="{% url 'cart' %}"
                                 >Cart
                                 <span style="color: #999"
@@ -185,7 +185,7 @@
                                                 >
                                             </li>
 
-                                            <li class="nav-item {% if '/shop/' == request.path %} active {% endif %}">
+                                            <li class="nav-item {% if '/shop/' in request.path %} active {% endif %}">
                                                 <a
                                                     class="nav-link"
                                                     href="{% url 'shop' %}"
@@ -193,7 +193,7 @@
                                                 >
                                             </li>
 
-                                            <li class="nav-item {% if '/wishlist/' == request.path %} active {% endif %}">
+                                            <li class="nav-item {% if '/wishlist/' in request.path %} active {% endif %}">
                                                 <a
                                                     class="nav-link"
                                                     href="{% url 'wishlist' %}"
@@ -201,7 +201,7 @@
                                                 >
                                             </li>
 
-                                            <li class="nav-item {% if '/cart/' == request.path %} active {% endif %}">
+                                            <li class="nav-item {% if '/cart/' in request.path %} active {% endif %}">
                                                 <a
                                                     class="nav-link"
                                                     href="{% url 'cart' %}"

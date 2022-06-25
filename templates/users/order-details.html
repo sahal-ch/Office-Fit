@@ -19,11 +19,11 @@
                         <div class="card-body">
                             <!--  -->
                             {% if item.status == 'ordered' or item.status == 'shipped' or item.status == 'out_for_delivery' %}
-                            <p class="text-dark">Order Status : <span class="text-primary">{{ item.status }}</span></p>
+                            <p class="text-dark">Order Status : <span class="text-primary" style="font-weight: 500; font-size: 14px; letter-spacing: 0.8px;">{{ item.status | upper }}</span></p>
                             {% elif item.status == 'delivered' %}
-                            <p class="text-dark">Order Status : <span class="text-success">{{ item.status }}</span></p>
+                            <p class="text-dark">Order Status : <span class="text-success" style="font-weight: 500; font-size: 14px; letter-spacing: 0.8px;">{{ item.status | upper }}</span></p>
                             {% elif item.status == 'cancelled' %}
-                            <p class="text-dark">Order Status : <span class="text-danger">{{ item.status }}</span></p>
+                            <p class="text-dark">Order Status : <span class="text-danger" style="font-weight: 500; font-size: 14px; letter-spacing: 0.8px;">{{ item.status | upper }}</span></p>
                             {% endif %}
 
                             <div class="d-flex mb-3" style="gap: 30px">

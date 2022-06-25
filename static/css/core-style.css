@@ -330,17 +330,17 @@ img {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 70px;
     flex: 0 0 70px;
-    max-width: 70px;
+    max-width: 100px;
 }
 .mobile-nav .amado-navbar-brand a {
     display: block;
-    max-width: 70px;
+    max-width: 100px;
 }
 .mobile-nav .amado-navbar-toggler {
     cursor: pointer;
 }
 .mobile-nav .amado-navbar-toggler span {
-    width: 28px;
+    width: 33px;
     height: 3px;
     background-color: #fbb710;
     display: block;

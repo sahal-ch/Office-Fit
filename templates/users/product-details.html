@@ -124,7 +124,7 @@
                     <!-- Product Meta Data -->
                     <div class="product-meta-data">
                         <div class="line"></div>
-                        <p class="product-price">&#8377; {{product.price}}</p>
+                        <p class="product-price" style="font-weight: 700;">&#8377; {{product.price}}</p>
                         <a href="product-details.html">
                             <h6>{{product.name}}</h6>
                         </a>
@@ -280,7 +280,7 @@
                         <h3 class="text-center">Customer Reviews</h3>
                     </header>
                     {% else %}
-                    <h4 class="text-danger ml-2 mt-5 text-center">There is no review yet!!!</h4>
+                    <h4 class="text-danger ml-2 mt-5 text-center">There are no reviews yet!!!</h4>
                     {% endif %}
 
                     {% for review in reviews %}

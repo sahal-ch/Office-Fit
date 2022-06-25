@@ -43,12 +43,12 @@
                                     <a href="{{ cart_item.product.get_url }}"
                                         >{{ cart_item.product.name }}</a
                                     >
-                                    <p style="color: #777; font-size: 13px">
+                                    <p style="color: #777; font-size: 13px; font-weight: 600;">
                                         &#8377; {{ cart_item.product.price }}
                                     </p>
                                 </td>
                                 <td class="price d-flex flex-column">
-                                    <span
+                                    <span style="font-weight: 600;"
                                         >&#8377; {{ cart_item.sub_total }}</span
                                     >
                                 </td>
@@ -128,7 +128,7 @@
                         </li>
                         <li>
                             <span>Grand Total : </span>
-                            <span>&#8377; {{ grand_total }}</span>
+                            <span style="font-weight: 600;">&#8377; {{ grand_total }}</span>
                         </li>
                     </ul>
                     <div class="cart-btn mt-100">

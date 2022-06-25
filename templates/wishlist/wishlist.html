@@ -35,7 +35,7 @@ Wishlist {% endblock %} {% block content %}
                                         href="{{ wishlist_item.product.get_url }}"
                                         ><img
                                             src="{{ wishlist_item.product.image_1.url }}"
-                                            alt="Product"
+                                            alt="Product" style="max-height: 150px;"
                                     /></a>
                                 </td>
                                 <td
@@ -50,7 +50,7 @@ Wishlist {% endblock %} {% block content %}
                                 <td
                                     class="price d-flex flex-column text-center"
                                 >
-                                    <p style="font-size: 16px; color: #000">
+                                    <p style="font-size: 16px; color: #000; font-weight: 600;">
                                         &#8377; {{ wishlist_item.product.price}}
                                     </p>
                                     {% if wishlist_item.product.stock > 0 %}

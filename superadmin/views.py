@@ -51,9 +51,11 @@ def superadmin_dashboard(request):
     if request.user.is_superadmin :
         # Total Revenue
         total_revenue = 0
-        products = OrderProduct.objects.exclude(status = 'cancelled')
+        products = OrderProduct.objects.filter(is_paid=True)
         for item in products :
-            total_revenue += item.product_price
+            tax_price = 0
+            tax_price = item.product_price + item.product_price * (5/100)
+            total_revenue += tax_price * item.quantity
             
         # Total Users
         user_count = Account.objects.exclude(is_superadmin=True)
@@ -64,17 +66,15 @@ def superadmin_dashboard(request):
         p_count = product.count()
         
         # Total Orders
-        cancelled = OrderProduct.objects.filter(status = 'cancelled')
-        c1 = cancelled.count()
-        total_order = Order.objects.all()
-        c2 = total_order.count()
+        order_total = Order.objects.filter(is_ordered=True)
+        total_order_count = order_total.count()
         
         #user chart
-        active_user = Account.objects.filter(is_active=True, is_superadmin=False)
-        blocked_user = Account.objects.filter(is_active=False, is_superadmin=False)
-        total_user = int(active_user.count()+blocked_user.count())
-        data1=[active_user.count(),blocked_user.count()]
-        data1_label =['Active','Blocked']
+        verified_user = Account.objects.filter(is_active=True, is_superadmin=False, email_verified=True)
+        not_verified_user = Account.objects.filter(is_active=True, is_superadmin=False, email_verified=False)
+        total_user = int(verified_user.count()+not_verified_user.count())
+        data1=[verified_user.count(),not_verified_user.count()]
+        data1_label =['Verified','Not Verified']
 
         # Orders Chart
         cod = Order.objects.filter(payment_method = 'Cash on Delivery')
@@ -113,8 +113,7 @@ def superadmin_dashboard(request):
             'total_products' : total_products,
             'u_count' : u_count,
             'p_count' : p_count,
-            'c1' : c1,
-            'c2' : c2,
+            'total_order_count' : total_order_count,
         }
         return render(request,'superadmin/dashboard.html', context)
     else :

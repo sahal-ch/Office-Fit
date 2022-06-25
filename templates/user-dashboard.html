@@ -16,10 +16,10 @@
                 <a class="list-group-item d-flex justify-content-center {% if '/my-account/my-orders/' in request.path %} active {% endif %}" style="font-size: 16px;" href="{% url 'my-orders' %}">Order History</a>
             </li>
             <li class="list-group-item">
-                <a class="list-group-item d-flex justify-content-center {% if '/my-account/edit-profile/' == request.path %} active {% endif %}" style="font-size: 16px;" href="{% url 'edit-profile' %}">Edit Profile</a>
+                <a class="list-group-item d-flex justify-content-center {% if '/my-account/edit-profile/' in request.path %} active {% endif %}" style="font-size: 16px;" href="{% url 'edit-profile' %}">Edit Profile</a>
             </li>
             <li class="list-group-item">
-                <a class="list-group-item d-flex justify-content-center {% if '/my-account/change-password/' == request.path %} active {% endif %} " style="font-size: 16px;" href="{% url 'change-password' %}">Reset Password</a>
+                <a class="list-group-item d-flex justify-content-center {% if '/my-account/change-password/' in request.path %} active {% endif %} " style="font-size: 16px;" href="{% url 'change-password' %}">Reset Password</a>
             </li>
             {% if user is not is_verified %}
             <li class="list-group-item">

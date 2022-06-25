@@ -7,7 +7,7 @@
     {% include 'alert.html' %}
     <div class="amado-pro-catagory clearfix">
         <!-- Single Catagory -->
-        <div class="single-products-catagory px-0 clearfix col-12 col-lg-6">
+        <div class="single-products-catagory px-0 clearfix col-12 col-xl-6">
             <div
                 class="card m-3 mx-0"
                 style="
@@ -28,12 +28,12 @@
                         We provide unique, independent design, which produces
                         and retails premium quality. With modern sleek design,
                         our products can suit any office dorm, home, school and
-                        workspace.
+                        workspace. Every product goes through a tough quality check to ensure that we can serve our best way.
                     </p>
                     <a
                         href="{% url 'shop' %}"
-                        class="btn amado-btn d-flex justify-content-center align-items-center"
-                        style="height: 60px; margin-top: 75px"
+                        class="btn amado-btn d-flex justify-content-center align-items-center my-2"
+                        style="height: 60px; color: #fff !important;"
                         >View All</a
                     >
                 </div>
@@ -42,7 +42,7 @@
 
         <!-- This categories is the keyword from return value of menu_link function in the context_processors.py -->
         {% for category in categories %}
-        <div class="single-products-catagory px-0 clearfix col-12 col-lg-6">
+        <div class="single-products-catagory px-0 clearfix col-12 col-xl-6">
             <div
                 class="card m-3 mx-0"
                 style="
@@ -62,7 +62,7 @@
                     <p class="card-text">{{ category.category_description }}</p>
                     <a
                         href="{{ category.get_url }}"
-                        class="btn amado-btn d-flex justify-content-center align-items-center"
+                        class="btn amado-btn d-flex justify-content-center align-items-center my-2"
                         style="height: 60px; color : #fff !important;"
                         >Shop {{category.category_name}}</a
                     >
