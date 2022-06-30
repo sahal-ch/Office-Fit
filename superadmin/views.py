@@ -53,9 +53,7 @@ def superadmin_dashboard(request):
         total_revenue = 0
         products = OrderProduct.objects.filter(is_paid=True)
         for item in products :
-            tax_price = 0
-            tax_price = item.product_price + item.product_price * (5/100)
-            total_revenue += tax_price * item.quantity
+            total_revenue += item.product_price * item.quantity
             
         # Total Users
         user_count = Account.objects.exclude(is_superadmin=True)
